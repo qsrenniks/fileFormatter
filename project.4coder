@@ -1,0 +1,77 @@
+version(1);
+
+project_name = "ff";
+
+patterns = {
+	"*.h",
+	"*.cpp",
+	"*.md",
+	"*.bat",
+};
+
+blacklist_patterns = {
+	".*",
+};
+
+load_paths_custom = {
+	{"."},
+};
+
+load_paths = {
+	{ load_paths_custom, .recursive = true, .relative = true, .os = "win" },
+};
+
+build_debug = "buildScripts\\buildDebug.bat";
+build_release = "buildScripts\\buildRelease.bat";
+build_configure = "buildScripts\\buildConfigure.bat";
+install = "buildScripts\\buildInstall.bat";
+runInstall = "buildScripts\\runInstall.bat";
+
+command_list = {
+	{
+		.name = "build debug",
+		.out = "*compilation*",
+		.footer_panel = true,
+		.save_dirty_files = true,
+		.cmd = { {build_debug, .os = "win" }, },
+	},
+	{
+		.name = "build release",
+		.out = "*compilation*",
+		.footer_panel = true,
+		.save_dirty_files = true,
+		.cmd = { {build_release, .os = "win" }, },
+	},
+	{
+		.name = "build configure",
+		.out = "*compilation*",
+		.footer_panel = true,
+		.save_dirty_files = true,
+		.cmd = { {build_configure, .os = "win" }, },
+	},
+	{
+		.name = "build install",
+		.out = "*compilation*",
+		.footer_panel = true,
+		.save_dirty_files = true,
+		.cmd = { 
+					 	{install, .os = "win"}, 
+					 },
+	},
+	{
+		.name = "run install",
+		.out = "*compilation*",
+		.footer_panel = true,
+		.save_dirty_files = true,
+		.cmd = { 
+							{runInstall, .os = "win"},
+					 },
+	},
+};
+
+fkey_command[1] = "build debug";
+fkey_command[2] = "build release";
+fkey_command[3] = "build configure";
+fkey_command[4] = "build install";
+fkey_command[5] = "run install";
+
