@@ -1,0 +1,31 @@
+{
+  "fileTypes": [
+    {
+      "extension": ".cpp",
+      "style": [
+        "/*!",
+        " * \file $FILE_NAME$",
+        " * \\author Quinton Skinner",
+        " * \\par Email: qsrenniks\\@gmail.com",
+        " * \\par $DATE$",
+        " */"
+      ]
+    },
+    {
+      "extension": ".h",
+      "style": [
+        "/*!",
+        " * \file $FILE_NAME$",
+        " * \\author Quinton Skinner",
+        " * \\par Email: qsrenniks\\@gmail.com",
+        " * \\par $DATE$",
+        " */",
+        "",
+        "#ifndef $FILE_UPPER$_H",
+        "#define $FILE_UPPER$_H",
+        "",
+        "#endif"
+      ]
+    }
+  ]
+}

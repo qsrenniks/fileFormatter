@@ -10,7 +10,9 @@ addunit(main.cpp)
 
 add_executable(ff ${FF_SOURCE})
 
+target_precompile_headers(ff PRIVATE "source/pch.h")
 target_compile_options(ff PRIVATE /std:c++17)
+target_include_directories(ff PRIVATE ${PROJECT_SOURCE_DIR}/source)
 
 install(TARGETS ff)
 
