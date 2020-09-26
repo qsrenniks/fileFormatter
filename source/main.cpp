@@ -101,6 +101,11 @@ static void parseFormatFile(std::vector<FileType>& files, std::filesystem::path&
       files.push_back(type);
     }
   }
+  else
+  {
+    std::cout << "could not open style file" << std::endl;
+    std::exit(EXIT_FAILURE);
+  }
 }
 
 static const FileType* matchFileTypeToExtension(const std::filesystem::path& file)
@@ -158,32 +163,32 @@ int main(int argc, const char** argv)
 
   std::filesystem::path currentPath = std::filesystem::current_path();
   std::filesystem::path formatPath = currentPath / argv[1];
-  std::filesystem::path filePath = currentPath / argv[2];
+  std::filesystem::path filePath = argv[2];
 
   parseFormatFile(m_fileTypes, formatPath);
   buildFileData(filePath);
 
-  //   if (!std::filesystem::exists(filePath)) // program ditches on existing files
-  //   {
-  std::ofstream file;
-  file.open(filePath);
-
-  if (file)
+  if (!std::filesystem::exists(filePath)) // program ditches on existing files
   {
-    const FileType* type = matchFileTypeToExtension(filePath);
-    if (type)
-    {
-      formatFileWithFileType(*type, file);
-    }
-  }
+    std::ofstream file;
+    file.open(filePath);
 
-  file.close();
-  //   }
-  //   else
-  //   {
-  //     std::cout << "file already exists" << std::endl;
-  //     return 0;
-  //   }
+    if (file)
+    {
+      const FileType* type = matchFileTypeToExtension(filePath);
+      if (type)
+      {
+        formatFileWithFileType(*type, file);
+      }
+    }
+
+    file.close();
+  }
+  else
+  {
+    std::cout << "file already exists" << std::endl;
+    return 0;
+  }
 
   return 0;
 }
