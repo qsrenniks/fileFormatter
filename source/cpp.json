@@ -4,7 +4,7 @@
       "extension": ".cpp",
       "style": [
         "/*!",
-        " * \file $FILE_NAME$",
+        " * \\file $FILE_NAME$",
         " * \\author Quinton Skinner",
         " * \\par Email: qsrenniks\\@gmail.com",
         " * \\par $DATE$",
@@ -15,7 +15,7 @@
       "extension": ".h",
       "style": [
         "/*!",
-        " * \file $FILE_NAME$",
+        " * \\file $FILE_NAME$",
         " * \\author Quinton Skinner",
         " * \\par Email: qsrenniks\\@gmail.com",
         " * \\par $DATE$",

@@ -120,12 +120,14 @@ static const std::string formatLine(const std::string& line)
 {
   std::string formattedLine = line;
   auto startOfVar = line.find('$');
-  auto endOfVar = line.find('$', startOfVar);
+  auto endOfVar = line.find('$', startOfVar + 1);
   if (startOfVar != std::string::npos && endOfVar != std::string::npos)
   {
-    const std::string varName = line.substr(startOfVar, startOfVar + endOfVar);
-    const std::string variable = resolveVariable(varName);
-    formattedLine.replace(startOfVar, endOfVar, variable);
+    unsigned len = endOfVar - startOfVar + 1;
+    std::string varName = line.substr(startOfVar, len);
+    std::string variable = resolveVariable(varName);
+    formattedLine.erase(startOfVar, len);
+    formattedLine.insert(startOfVar, variable);
   }
   return formattedLine;
 }
@@ -137,6 +139,12 @@ static void formatFileWithFileType(const FileType& type, std::ofstream& file)
     const std::string formattedLine = formatLine(line);
     file << formattedLine << std::endl;
   }
+}
+
+static void buildFileData(const std::filesystem::path& filePath)
+{
+  m_activeData.m_filenameWithExtension = filePath.filename().string();
+  m_activeData.m_filenameWithoutExtension = filePath.stem().string();
 }
 
 int main(int argc, const char** argv)
@@ -153,28 +161,29 @@ int main(int argc, const char** argv)
   std::filesystem::path filePath = currentPath / argv[2];
 
   parseFormatFile(m_fileTypes, formatPath);
+  buildFileData(filePath);
 
-  if (!std::filesystem::exists(filePath)) // program ditches on existing files
+  //   if (!std::filesystem::exists(filePath)) // program ditches on existing files
+  //   {
+  std::ofstream file;
+  file.open(filePath);
+
+  if (file)
   {
-    std::ofstream file;
-    file.open(filePath);
-
-    if (file)
+    const FileType* type = matchFileTypeToExtension(filePath);
+    if (type)
     {
-      const FileType* type = matchFileTypeToExtension(filePath);
-      if (type)
-      {
-        formatFileWithFileType(*type, file);
-      }
+      formatFileWithFileType(*type, file);
     }
+  }
 
-    file.close();
-  }
-  else
-  {
-    std::cout << "file already exists" << std::endl;
-    return 0;
-  }
+  file.close();
+  //   }
+  //   else
+  //   {
+  //     std::cout << "file already exists" << std::endl;
+  //     return 0;
+  //   }
 
   return 0;
 }
