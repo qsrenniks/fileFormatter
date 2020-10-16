@@ -32,7 +32,7 @@ const std::string resolveVariable(const std::string& variableName)
     std::stringstream stream;
     time_t t = time(nullptr);
     tm* timePtr = localtime(&t);
-    stream << timePtr->tm_year + 1900 << "/" << timePtr->tm_mon << "/" << timePtr->tm_mday;
+    stream << timePtr->tm_year + 1900 << "/" << timePtr->tm_mon + 1 << "/" << timePtr->tm_mday;
     return stream.str();
   }
   else if (variableName == "$FILE_UPPER$")
