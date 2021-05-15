@@ -103,6 +103,7 @@ static void parseFormatFile(std::vector<FileType>& files, std::filesystem::path&
 	}
 	else
 	{
+		std::cout << formatPath << std::endl;
 		std::cout << "could not open style file" << std::endl;
 		std::exit(EXIT_FAILURE);
 	}
